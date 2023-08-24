@@ -1,1 +1,1 @@
-export type Direction =  'HORIZONTAL' | 'VERTICAL' 
+export type Direction = "HORIZONTAL" | "VERTICAL";
