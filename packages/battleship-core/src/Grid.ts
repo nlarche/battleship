@@ -27,7 +27,7 @@ export class Grid {
   }
 
   cells(): Cell[] {
-    return this.grid;
+    return [...this.grid];
   }
 
   shoot(coordinates: Coordinates): GameState {
@@ -66,6 +66,16 @@ export class Grid {
     );
   }
 
+  toDisplayableGrid() {
+    const cells = this.grid;
+    const gridCells = [];
+    for (let i = 0; i < cells.length; i += this.size) {
+      const chunk = [...cells.slice(i, i + this.size)];
+      gridCells.push(chunk);
+    }
+    return [...gridCells];
+  }
+
   private initialize(size: number) {
     for (let i = 1; i <= size; i++) {
       for (let j = 1; j <= size; j++) {
@@ -75,9 +85,9 @@ export class Grid {
   }
 
   private updateGrid(oldCell: Cell, cell: Cell) {
-    const grid = this.grid;
+    const grid = [...this.grid];
     grid[grid.indexOf(oldCell)] = cell;
-    this.grid = [...grid];
+    this.grid = grid;
   }
 
   private findBoatCells(boat: Boat) {
@@ -95,4 +105,13 @@ export class Grid {
     }
     return boatCells;
   }
+}
+
+export function toDisplayableGrid(cells: Cell[], size: number) {
+  const gridCells = [];
+  for (let i = 0; i < cells.length; i += size) {
+    const chunk = [...cells.slice(i, i + size)];
+    gridCells.push(chunk);
+  }
+  return [...gridCells];
 }
